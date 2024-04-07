@@ -135,10 +135,13 @@ static void receive_one(int fd_can, int fd_uinput)
 		 * control of your simulated Lamborghini!
 		 */
 		ev.type = EV_KEY;
+
+		/* Brake sets bits 0 and 1 (value 3) in byte 4 */
 		ev.code = BTN_TRIGGER;
 		ev.value = !(!(frm.data[4] & 3));
 		write(fd_uinput, &ev, sizeof(ev));
 
+		/* Clutch sets bit 2 (value 4) in byte 6 */
 		ev.code = BTN_THUMB;
 		ev.value = !(!(frm.data[6] & 4));
 		write(fd_uinput, &ev, sizeof(ev));
